@@ -1,0 +1,58 @@
+import java.util.Scanner;
+
+public class NutrientCalculator {
+    static final double MAX_CALORIES = 2000;
+    static final double MAX_PROTEINS = 50;
+    static final double MAX_FATS = 70;
+    static final double MAX_CARBS = 300;
+
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+
+        double totalCalories = 0, totalProteins = 0, totalFats = 0, totalCarbs = 0;
+
+        System.out.println("Ingrese el número de ingredientes consumidos:");
+        int numIngredients = scanner.nextInt();
+
+        for (int i = 1; i <= numIngredients; i++) {
+            System.out.println("Ingrediente " + i + " (en gramos):");
+            double grams = scanner.nextDouble();
+
+            System.out.println("Seleccione el grupo nutricional: caloria, proteina, grasa o carbohidrato:");
+            String group = scanner.next().trim().toLowerCase(); // Usamos next() en vez de nextLine()
+
+            double calorieFactor = 1.0;
+            double proteinFactor = 0.25;
+            double fatFactor = 0.9;
+            double carbFactor = 0.4;
+
+            if (group.equals("caloria") || group.equals("caloría")) {
+                totalCalories += grams * calorieFactor;
+            } else if (group.equals("proteina") || group.equals("proteína")) {
+                totalProteins += grams * proteinFactor;
+            } else if (group.equals("grasa")) {
+                totalFats += grams * fatFactor;
+            } else if (group.equals("carbohidrato") || group.equals("carbohidratos")) {
+                totalCarbs += grams * carbFactor;
+            } else {
+                System.out.println("Grupo nutricional no válido. Intente de nuevo.");
+                i--; // Para repetir la entrada del ingrediente
+            }
+        }
+
+        System.out.println("\nResultados Nutricionales:");
+        System.out.printf("Calorías: %.2f / %.2f\n", totalCalories, MAX_CALORIES);
+        System.out.printf("Proteínas: %.2f / %.2f\n", totalProteins, MAX_PROTEINS);
+        System.out.printf("Grasas: %.2f / %.2f\n", totalFats, MAX_FATS);
+        System.out.printf("Carbohidratos: %.2f / %.2f\n", totalCarbs, MAX_CARBS);
+
+        if (totalCalories <= MAX_CALORIES && totalProteins <= MAX_PROTEINS &&
+            totalFats <= MAX_FATS && totalCarbs <= MAX_CARBS) {
+            System.out.println("\nEl valor nutricional de la comida es aceptable.");
+        } else {
+            System.out.println("\nEl valor nutricional de la comida NO es aceptable.");
+        }
+
+        scanner.close();
+    }
+}
