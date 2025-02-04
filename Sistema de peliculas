@@ -1,0 +1,59 @@
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.Scanner;
+
+class Pelicula {
+    String titulo;
+    int anio;
+    String genero;
+
+    // Constructor
+    public Pelicula(String titulo, int anio, String genero) {
+        this.titulo = titulo;
+        this.anio = anio;
+        this.genero = genero;
+    }
+
+    // Método para imprimir la película
+    @Override
+    public String toString() {
+        return anio + " - " + titulo + " (" + genero + ")";
+    }
+}
+
+public class SistemaPeliculas {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ArrayList<Pelicula> peliculas = new ArrayList<>();
+
+        System.out.println("Ingrese el número de películas:");
+        int numPeliculas = scanner.nextInt();
+        scanner.nextLine(); // Consumir el salto de línea
+
+        for (int i = 0; i < numPeliculas; i++) {
+            System.out.println("\nIngrese el título de la película " + (i + 1) + ":");
+            String titulo = scanner.nextLine();
+
+            System.out.println("Ingrese el año de lanzamiento:");
+            int anio = scanner.nextInt();
+            scanner.nextLine(); // Consumir el salto de línea
+
+            System.out.println("Ingrese el género:");
+            String genero = scanner.nextLine();
+
+            peliculas.add(new Pelicula(titulo, anio, genero));
+        }
+
+        // Ordenar la lista por año de lanzamiento
+        Collections.sort(peliculas, Comparator.comparingInt(p -> p.anio));
+
+        // Mostrar la lista ordenada
+        System.out.println("\nLista de películas ordenadas por año de lanzamiento:");
+        for (Pelicula p : peliculas) {
+            System.out.println(p);
+        }
+
+        scanner.close();
+    }
+}
